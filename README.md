@@ -1,4 +1,4 @@
-# Three.js Journey
+# Outlaws Project
 
 ## Setup
 Download [Node.js](https://nodejs.org/en/download/).
