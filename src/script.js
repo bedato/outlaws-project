@@ -6,10 +6,25 @@ import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader.js";
 import { FBXLoader } from "three/examples/jsm/loaders/FBXLoader";
 import { DRACOLoader } from "three/examples/jsm/loaders/DRACOLoader.js";
 import { gsap } from "gsap";
-
+import { object } from "./rest";
+// import { getJson } from "./utils";
+const textBoxObject = object();
+const textBoxElement = document.querySelector(".text-box");
+const textBoxTitle = document.querySelector(".text-box-title");
+const textBoxText = document.querySelector(".text-box-text");
+const questionList = document.querySelector(".text-box-answers");
+const questionListElement = document.querySelector(".text-box-answers-wrapper");
+const answer1 = document.querySelector(".audio");
+const answer2 = document.querySelector(".game");
+const answer3 = document.querySelector(".film");
+const answer4 = document.querySelector(".web");
+const studentProject = document.querySelector(".student-project");
+const studentProjectTitle = document.querySelector(".student-project-title");
+const studentProjectText = document.querySelector(".student-project-text");
 /**
  * Loaders
  */
+const listener = new THREE.AudioListener();
 const loadingBarElement = document.querySelector(".loading-bar");
 const raycaster = new THREE.Raycaster();
 const mouse = new THREE.Vector2();
@@ -44,7 +59,13 @@ const loadingManager = new THREE.LoadingManager(
   }
 );
 const fbxLoader = new FBXLoader(loadingManager);
-
+const sound = new THREE.PositionalAudio(listener);
+const audioLoader = new THREE.AudioLoader();
+audioLoader.load("masters/audio.ogg", function (buffer) {
+  sound.setBuffer(buffer);
+  sound.setRefDistance(20);
+  //sound.play();
+});
 /**
  * Base
  */
@@ -103,11 +124,12 @@ scene.add(directionalLight);
 /**
  * Model
  */
-fbxLoader.load("reception.fbx", (fbx) => {
-  fbx.scale.set(0.17, 0.17, 0.17);
-  console.log(fbx);
-  scene.add(fbx);
-});
+
+// fbxLoader.load("reception.fbx", (fbx) => {
+//   fbx.scale.set(0.17, 0.17, 0.17);
+//   console.log(fbx);
+//   scene.add(fbx);
+// });
 
 fbxLoader.load("Floor.fbx", (fbx) => {
   fbx.scale.set(0.17, 0.17, 0.17);
@@ -115,44 +137,163 @@ fbxLoader.load("Floor.fbx", (fbx) => {
   scene.add(fbx);
 });
 
-fbxLoader.load("Way.fbx", (fbx) => {
+fbxLoader.load("models/Dozent_L.fbx", (fbx) => {
   fbx.scale.set(0.17, 0.17, 0.17);
   console.log(fbx);
   scene.add(fbx);
 });
 
-fbxLoader.load("/models/Person/Player.fbx", (fbx) => {
+fbxLoader.load("models/Dozent_R.fbx", (fbx) => {
   fbx.scale.set(0.17, 0.17, 0.17);
   console.log(fbx);
   scene.add(fbx);
 });
 
-function onClick(event) {
-  event.preventDefault();
+fbxLoader.load("models/Door_L.fbx", (fbx) => {
+  fbx.scale.set(0.17, 0.17, 0.17);
+  console.log(fbx);
+  scene.add(fbx);
+});
 
+fbxLoader.load("models/Door_R.fbx", (fbx) => {
+  fbx.scale.set(0.17, 0.17, 0.17);
+  console.log(fbx);
+  fbx.add(sound);
+  scene.add(fbx);
+});
+
+fbxLoader.load("models/Infoscreen.fbx", (fbx) => {
+  fbx.scale.set(0.17, 0.17, 0.17);
+  console.log(fbx);
+  scene.add(fbx);
+});
+
+fbxLoader.load("models/PC_Setup_02.fbx", (fbx) => {
+  fbx.scale.set(0.17, 0.17, 0.17);
+  console.log(fbx);
+  scene.add(fbx);
+});
+
+fbxLoader.load("models/PC_Setup_03.fbx", (fbx) => {
+  fbx.scale.set(0.17, 0.17, 0.17);
+  console.log(fbx);
+  scene.add(fbx);
+});
+
+let questionId;
+
+function onDocumentMouseMove(event) {
+  var mouse = new THREE.Vector2();
   mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
   mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
 
+  var raycaster = new THREE.Raycaster();
+  raycaster.setFromCamera(mouse, camera);
+  const intersects = raycaster.intersectObjects(scene.children, true);
+  if (
+    intersects &&
+    intersects.length > 0 &&
+    intersects[0].object.name !== "Floor"
+  ) {
+    document.body.style.cursor = "pointer";
+  } else {
+    document.body.style.cursor = "default";
+  }
+}
+
+function onClick(event) {
+  event.preventDefault();
+  mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
+  mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
   raycaster.setFromCamera(mouse, camera);
 
   const intersects = raycaster.intersectObjects(scene.children, true);
 
+  if (intersects && intersects.length > 0) {
+    document.body.style.cursor = "pointer";
+  } else {
+    document.body.style.cursor = "default";
+  }
+
   if (intersects.length > 0) {
     console.log(intersects[0].object);
-    if (intersects[0].object.name === "fox") {
-      document.querySelector(".text-box.fox").classList.add("visible");
-    } else {
-      document.querySelector(".text-box.fox").classList.remove("visible");
-    }
+    if (intersects[0].object.name === "Human_R") {
+      textBoxElement.classList.add("visible");
+      questionListElement.classList.add("visible");
+      textBoxTitle.innerHTML = textBoxObject.infoPerson1.name;
+      textBoxText.innerHTML = textBoxObject.infoPerson1.initialText;
+      answer1.innerHTML = textBoxObject.infoPerson1.answers[0].label;
+      answer1.setAttribute("data-index", "0");
+      answer2.innerHTML = textBoxObject.infoPerson1.answers[1].label;
+      answer2.setAttribute("data-index", "1");
+      answer3.innerHTML = textBoxObject.infoPerson1.answers[2].label;
+      answer3.setAttribute("data-index", "2");
+      answer4.innerHTML = textBoxObject.infoPerson1.answers[3].label;
+      answer4.setAttribute("data-index", "3");
 
-    if (intersects[0].object.name === "LOD3spShape") {
-      document.querySelector(".text-box.duck").classList.add("visible");
+      questionList.addEventListener("click", function (e, target) {
+        questionId = e.target.dataset.index;
+        questionId = parseInt(questionId);
+        questionListElement.classList.remove("visible");
+
+        textBoxText.innerHTML =
+          textBoxObject.infoPerson1.answers[questionId].answer;
+      });
+    } else if (intersects[0].object.name === "Human_L") {
+      textBoxElement.classList.add("visible");
+      questionListElement.classList.add("visible");
+      textBoxTitle.innerHTML = textBoxObject.infoPerson2.name;
+      textBoxText.innerHTML = textBoxObject.infoPerson2.initialText;
+      answer1.innerHTML = textBoxObject.infoPerson2.answers[0].label;
+      answer1.setAttribute("data-index", "0");
+      answer2.innerHTML = textBoxObject.infoPerson2.answers[1].label;
+      answer2.setAttribute("data-index", "1");
+      answer3.innerHTML = textBoxObject.infoPerson2.answers[2].label;
+      answer3.setAttribute("data-index", "2");
+      answer4.innerHTML = textBoxObject.infoPerson2.answers[3].label;
+      answer4.setAttribute("data-index", "3");
+
+      questionList.addEventListener("click", function (e, target) {
+        questionId = e.target.dataset.index;
+        questionId = parseInt(questionId);
+        questionListElement.classList.remove("visible");
+
+        textBoxText.innerHTML =
+          textBoxObject.infoPerson2.answers[questionId].answer;
+      });
+    } else if (intersects[0].object.parent.name === "PC_Setup_03") {
+      studentProject.classList.add("visible");
+      studentProjectTitle.innerHTML = textBoxObject.studentProject1.name;
+      studentProjectText.innerHTML =
+        textBoxObject.studentProject1.projectDescription;
+    } else if (intersects[0].object.parent.name === "PC_Setup_02") {
+      studentProject.classList.add("visible");
+      studentProjectTitle.innerHTML = textBoxObject.studentProject2.name;
+      studentProjectText.innerHTML =
+        textBoxObject.studentProject2.projectDescription;
+    } else if (intersects[0].object.name === "TV") {
+      window.open("http://infoscreen.sae.ch/", "_blank").focus();
+    } else if (intersects[0].object.name === "Door_02") {
+      studentProject.classList.add("visible");
+      studentProjectTitle.innerHTML = textBoxObject.studentProjectAudio1.name;
+      studentProjectText.innerHTML =
+        textBoxObject.studentProjectAudio1.projectDescription;
+    } else if (intersects[0].object.name === "Door_03") {
+      studentProject.classList.add("visible");
+      studentProjectTitle.innerHTML = textBoxObject.studentProjectAudio2.name;
+      studentProjectText.innerHTML =
+        textBoxObject.studentProjectAudio2.projectDescription;
     } else {
-      document.querySelector(".text-box.duck").classList.remove("visible");
+      textBoxElement.classList.remove("visible");
+      studentProject.classList.remove("visible");
+      studentProjectTitle.innerHTML = "";
+      studentProjectText.innerHTML = "";
+      textBoxTitle.innerHTML = "";
+      textBoxText.innerHTML = "";
     }
-    //console.log("Intersection:", intersects[0].object);
   }
 }
+// }
 
 /**
  * Sizes
@@ -207,6 +348,7 @@ renderer.setSize(sizes.width, sizes.height);
 renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 
 renderer.domElement.addEventListener("click", onClick, false);
+renderer.domElement.addEventListener("mousemove", onDocumentMouseMove, false);
 
 /**
  * Animate
