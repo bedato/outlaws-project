@@ -7,37 +7,51 @@
   </head>
   <body>
     <div class="loading-bar"></div>
-    <div class="text-box fox">
-      <h1>The Funky Fox:</h1>
-      <p>
-        Hello there, i am directly talking to you right now. As you can see, i
-        am a fox...
-      </p>
-    </div>
-    <div class="text-box duck">
-      <h1>The Ducking Duck:</h1>
-      <p>You see that fox over there? He's an A*****</p>
-    </div>
-    <div class="point point-0">
-      <div class="label">1</div>
-      <div class="text">
-        Front and top screen with HUD aggregating terrain and battle
-        informations.
+
+    <div class="text-box">
+      <div class="text-box-wrapper">
+        <div class="text-box-content">
+          <h1 class="text-box-title"></h1>
+          <p class="text-box-text"></p>
+          <div class="text-box-answers-wrapper">
+            <div class="text-box-answers">
+              <a href="#" class="text-box-answer audio"></a>
+              <a href="#" class="text-box-answer game"></a>
+              <a href="#" class="text-box-answer film"></a>
+              <a href="#" class="text-box-answer web"></a>
+            </div>
+          </div>
+        </div>
+        <div class="text-box-image">
+          <img src="https://via.placeholder.com/300x350" alt="" />
+        </div>
       </div>
     </div>
-    <div class="point point-1">
-      <div class="label">2</div>
-      <div class="text">
-        Ventilation with air purifier and detection of environment toxicity.
+
+    <div class="student-project">
+      <div class="student-project-content">
+        <h1 class="student-project-title">This is a great student Project</h1>
+        <p class="student-project-text">
+          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ullam eaque
+          distinctio, doloribus suscipit voluptate, expedita nesciunt temporibus
+          amet tempore sit ipsum veniam animi. Ad?
+        </p>
+      </div>
+      <div class="student-project-more">
+        <div class="student-project-img-wrapper">
+          <img
+            class="student-project-img"
+            src="https://via.placeholder.com/1080x600"
+            alt=""
+          />
+        </div>
+        <div class="student-project-cta--wrapper">
+          <a class="student-project-cta" href="#">To the student</a>
+          <a class="student-project-cta" href="#">To the project page</a>
+        </div>
       </div>
     </div>
-    <div class="point point-2">
-      <div class="label">3</div>
-      <div class="text">
-        Cameras supporting night vision and heat vision with automatic
-        adjustment.
-      </div>
-    </div>
+
     <canvas class="webgl"></canvas>
   </body>
 </html>

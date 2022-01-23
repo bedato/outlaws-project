@@ -39,97 +39,144 @@ body {
   /* pointer-events: none; */
 }
 
-.point .label {
-  position: absolute;
-  top: -20px;
-  left: -20px;
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  background: #00000077;
-  border: 1px solid #ffffff77;
-  color: #ffffff;
-  font-family: Helvetica, Arial, sans-serif;
-  text-align: center;
-  line-height: 40px;
-  font-weight: 100;
-  font-size: 14px;
-  cursor: help;
-  transform: scale(0, 0);
-  transition: transform 0.3s;
-}
-
-.point .text {
-  position: absolute;
-  top: 30px;
-  left: -120px;
-  width: 200px;
-  padding: 20px;
-  border-radius: 4px;
-  background: #00000077;
-  border: 1px solid #ffffff77;
-  color: #ffffff;
-  line-height: 1.3em;
-  font-family: Helvetica, Arial, sans-serif;
-  font-weight: 100;
-  font-size: 14px;
-  opacity: 0;
-  transition: opacity 0.3s;
-  pointer-events: none;
-}
-
-.point:hover .text {
-  opacity: 1;
-}
-
-.point.visible .label {
-  transform: scale(1, 1);
-}
-
-.text-box.fox {
+.text-box {
   position: absolute;
   display: none;
-  color: red;
+  color: #fff;
   bottom: 110px;
+  background: #223262;
   z-index: 999;
   left: 0;
-  border: 4px solid red;
-  padding: 50px 110px;
+  border: 4px solid #afaeae;
+  padding: 30px 60px;
   border-radius: 20px;
+  min-height: 350px;
   margin: 0 50px;
   font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
   right: 0;
   font-size: 2rem;
 }
 
-h1 {
-  margin-bottom: 1rem;
+.text-box-wrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
-.text-box.fox.visible {
-  display: block;
-}
-
-.text-box.duck {
-  position: absolute;
+.text-box-answers-wrapper {
   display: none;
-  color: yellow;
-  bottom: 110px;
-  z-index: 999;
-  left: 0;
-  border: 4px solid yellow;
-  padding: 50px 110px;
-  border-radius: 20px;
-  margin: 0 50px;
-  font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
-  right: 0;
+}
+
+h1 {
+  margin-bottom: 2rem;
+  line-height: 1;
+}
+
+p {
   font-size: 2rem;
 }
 
-h1 {
-  margin-bottom: 1rem;
+.text-box-answers {
+  display: grid;
+  grid-template-columns: 300px 300px;
+  grid-gap: 20px;
+  margin-top: 40px;
 }
 
-.text-box.duck.visible {
+.text-box-answer {
+  color: white;
+  text-decoration: none;
+  background-color: grey;
+  padding: 20px 30px;
+  transition: 0.2s;
+  box-sizing: border-box;
+}
+
+.text-box-answer:hover {
+  outline: 7px inset black;
+}
+
+.student-project {
+  position: absolute;
+  color: #fff;
+  background: #223262;
+  z-index: 999;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  border: 7px solid #afaeae;
+  padding: 30px 60px;
+  border-radius: 7px;
+  min-height: 350px;
+  margin: 110px 50px;
+  font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
+  font-size: 2rem;
+  display: flex;
+  display: none;
+}
+
+.student-project-text {
+  font-size: 1.5rem;
+  max-width: 70%;
+  min-height: 300px;
+}
+
+.student-project-cta {
+      text-decoration: none;
+    color: #fff;
+    background: #ee2737;
+    width: fit-content;
+    padding: 6px 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    line-height: 1;
+    padding: 12px 20px;
+}
+
+.student-project-cta:hover {
+    outline: 7px inset black;
+}
+
+.student-project-cta:nth-child(2) {
+  background-color: #ffb500;
+}
+
+.student-project-cta:nth-child(1) {
+  margin-right: 20px;
+}
+
+.student-project-img {
+    width: 500px;
+    padding: 50px 0;
+}
+
+.student-project-cta--wrapper {
+  display: flex;
+}
+
+.student-project-more {
+  display: flex;
+  flex-direction: column;
+}
+
+.audio {
+  background: #307fe2;
+}
+
+.game {
+  background: #ee2737;
+}
+
+.film {
+  background: #ffb500;
+}
+
+.web {
+  background-color: #753bbd;
+}
+
+.visible {
   display: block;
 }
