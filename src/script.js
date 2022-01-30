@@ -1,10 +1,10 @@
 import "./style.css";
-import * as dat from "lil-gui";
+// import * as dat from "lil-gui";
 import * as THREE from "three";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
-import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader.js";
+// import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader.js";
 import { FBXLoader } from "three/examples/jsm/loaders/FBXLoader";
-import { DRACOLoader } from "three/examples/jsm/loaders/DRACOLoader.js";
+// import { DRACOLoader } from "three/examples/jsm/loaders/DRACOLoader.js";
 import { gsap } from "gsap";
 import { object } from "./rest";
 // import { getJson } from "./utils";
@@ -61,11 +61,16 @@ const loadingManager = new THREE.LoadingManager(
 const fbxLoader = new FBXLoader(loadingManager);
 const sound = new THREE.PositionalAudio(listener);
 const audioLoader = new THREE.AudioLoader();
-audioLoader.load("masters/audio.ogg", function (buffer) {
+audioLoader.load("masters/loop.ogg", function (buffer) {
+  console.log(buffer);
   sound.setBuffer(buffer);
-  sound.setRefDistance(20);
-  //sound.play();
+  sound.setLoop( true );
+	sound.setVolume( 0.5 );
+  sound.setRefDistance(2000);
+  sound.play();
 });
+
+
 /**
  * Base
  */
@@ -114,11 +119,11 @@ const directionalLight = new THREE.DirectionalLight(0xffffff, 0.9);
 directionalLight.castShadow = true;
 directionalLight.shadow.mapSize.set(1024, 1024);
 directionalLight.shadow.camera.far = 15;
-directionalLight.shadow.camera.left = -7;
-directionalLight.shadow.camera.top = 7;
-directionalLight.shadow.camera.right = 7;
-directionalLight.shadow.camera.bottom = -7;
-directionalLight.position.set(5, 5, 5);
+directionalLight.shadow.camera.left = -10;
+directionalLight.shadow.camera.top = 10;
+directionalLight.shadow.camera.right = 10;
+directionalLight.shadow.camera.bottom = -10;
+directionalLight.position.set(10, 10, 10);
 scene.add(directionalLight);
 
 /**
@@ -200,6 +205,8 @@ function onDocumentMouseMove(event) {
     document.body.style.cursor = "default";
   }
 }
+    const click = new Audio("masters/click.ogg");
+    const closeAudio = new Audio("masters/close.ogg");
 
 function onClick(event) {
   event.preventDefault();
@@ -218,6 +225,7 @@ function onClick(event) {
   if (intersects.length > 0) {
     console.log(intersects[0].object);
     if (intersects[0].object.name === "Human_R") {
+      click.play();
       textBoxElement.classList.add("visible");
       questionListElement.classList.add("visible");
       textBoxTitle.innerHTML = textBoxObject.infoPerson1.name;
@@ -240,6 +248,7 @@ function onClick(event) {
           textBoxObject.infoPerson1.answers[questionId].answer;
       });
     } else if (intersects[0].object.name === "Human_L") {
+      click.play();
       textBoxElement.classList.add("visible");
       questionListElement.classList.add("visible");
       textBoxTitle.innerHTML = textBoxObject.infoPerson2.name;
@@ -255,6 +264,7 @@ function onClick(event) {
 
       questionList.addEventListener("click", function (e, target) {
         questionId = e.target.dataset.index;
+        click.play();
         questionId = parseInt(questionId);
         questionListElement.classList.remove("visible");
 
@@ -262,37 +272,63 @@ function onClick(event) {
           textBoxObject.infoPerson2.answers[questionId].answer;
       });
     } else if (intersects[0].object.parent.name === "PC_Setup_03") {
+      click.play();
       studentProject.classList.add("visible");
       studentProjectTitle.innerHTML = textBoxObject.studentProject1.name;
       studentProjectText.innerHTML =
         textBoxObject.studentProject1.projectDescription;
     } else if (intersects[0].object.parent.name === "PC_Setup_02") {
+      click.play();
       studentProject.classList.add("visible");
       studentProjectTitle.innerHTML = textBoxObject.studentProject2.name;
       studentProjectText.innerHTML =
         textBoxObject.studentProject2.projectDescription;
     } else if (intersects[0].object.name === "TV") {
+      click.play();
       window.open("http://infoscreen.sae.ch/", "_blank").focus();
     } else if (intersects[0].object.name === "Door_02") {
+      click.play();
       studentProject.classList.add("visible");
       studentProjectTitle.innerHTML = textBoxObject.studentProjectAudio1.name;
       studentProjectText.innerHTML =
         textBoxObject.studentProjectAudio1.projectDescription;
     } else if (intersects[0].object.name === "Door_03") {
+      click.play();
       studentProject.classList.add("visible");
       studentProjectTitle.innerHTML = textBoxObject.studentProjectAudio2.name;
       studentProjectText.innerHTML =
         textBoxObject.studentProjectAudio2.projectDescription;
-    } else {
-      textBoxElement.classList.remove("visible");
-      studentProject.classList.remove("visible");
-      studentProjectTitle.innerHTML = "";
-      studentProjectText.innerHTML = "";
-      textBoxTitle.innerHTML = "";
-      textBoxText.innerHTML = "";
     }
+    // else {
+    //   closeAudio.play();
+    //   textBoxElement.classList.remove("visible");
+    //   studentProject.classList.remove("visible");
+    //   studentProjectTitle.innerHTML = "";
+    //   studentProjectText.innerHTML = "";
+    //   textBoxTitle.innerHTML = "";
+    //   textBoxText.innerHTML = "";
+    // }
   }
 }
+
+
+
+// Close Elements
+
+function closeTextBoxes() {
+        closeAudio.play();
+        textBoxElement.classList.remove("visible");
+        studentProject.classList.remove("visible");
+        studentProjectTitle.innerHTML = "";
+        studentProjectText.innerHTML = "";
+        textBoxTitle.innerHTML = "";
+        textBoxText.innerHTML = "";
+}
+canvas.addEventListener('click', function () {
+  if (textBoxElement.classList.contains("visible") || studentProject.classList.contains("visible")) {
+    closeTextBoxes();
+  }
+})
 // }
 
 /**

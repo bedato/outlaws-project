@@ -96,6 +96,10 @@ p {
   outline: 7px inset black;
 }
 
+.text-box-image {
+  margin-right: 24px;
+}
+
 .student-project {
   position: absolute;
   color: #fff;
