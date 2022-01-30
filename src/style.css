@@ -44,14 +44,14 @@ body {
   display: none;
   color: #fff;
   bottom: 110px;
+  max-width: 1100px;
   background: #223262;
   z-index: 999;
   left: 0;
   border: 4px solid #afaeae;
   padding: 30px 60px;
   border-radius: 20px;
-  min-height: 350px;
-  margin: 0 50px;
+  margin: 0 auto;
   font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
   right: 0;
   font-size: 2rem;
@@ -60,44 +60,58 @@ body {
 .text-box-wrapper {
   display: flex;
   justify-content: space-between;
-  align-items: center;
 }
 
 .text-box-answers-wrapper {
   display: none;
+  margin-top: auto;
+  text-align: center;
+}
+
+.text-box-content {
+  display: flex;
+  flex-direction: column;
 }
 
 h1 {
-  margin-bottom: 2rem;
+  font-size: 1em;
   line-height: 1;
 }
 
 p {
-  font-size: 2rem;
+  font-size: 1.8rem;
 }
 
 .text-box-answers {
   display: grid;
-  grid-template-columns: 300px 300px;
-  grid-gap: 20px;
-  margin-top: 40px;
+  grid-template-columns: 220px 220px;
+  grid-gap: 12px;
 }
 
 .text-box-answer {
   color: white;
   text-decoration: none;
   background-color: grey;
-  padding: 20px 30px;
+  padding: 13px 24px;
   transition: 0.2s;
   box-sizing: border-box;
+  font-size: 1.3rem;
 }
 
 .text-box-answer:hover {
   outline: 7px inset black;
 }
 
-.text-box-image {
-  margin-right: 24px;
+.student-project-title {
+  margin-bottom: 1.2rem;
+}
+
+.lead {
+
+}
+
+.text-box-text {
+  max-width: 760px;
 }
 
 .student-project {
@@ -123,22 +137,29 @@ p {
 }
 
 .student-project-text {
-  font-size: 1.5rem;
+  font-size: 1.2rem;
   max-width: 70%;
-  min-height: 300px;
 }
 
+.student-project-text > p {
+  font-size: 1.4rem;
+}
 .student-project-cta {
+  color: white;
   text-decoration: none;
-  color: #fff;
-  background: #ee2737;
-  width: fit-content;
-  padding: 6px 20px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  line-height: 1;
-  padding: 12px 20px;
+  background-color: grey;
+  padding: 13px 24px;
+  transition: 0.2s;
+  box-sizing: border-box;
+  font-size: 1.3rem;
+}
+
+.text-box-answer:hover {
+  outline: 7px inset black;
+}
+
+.sub-title {
+  margin: 0.8em 0 0.7em 0;
 }
 
 .student-project-cta:hover {
@@ -155,7 +176,7 @@ p {
 
 .student-project-img {
   width: 500px;
-  padding: 50px 0;
+  padding: 0 0 20px 0;
 }
 
 .student-project-cta--wrapper {
@@ -165,8 +186,10 @@ p {
 .student-project-more {
   display: flex;
   flex-direction: column;
+  justify-content: center;
   flex: 0 0 40%;
 }
+
 
 .audio {
   background: #307fe2;
