@@ -130,11 +130,11 @@ scene.add(directionalLight);
  * Model
  */
 
-// fbxLoader.load("reception.fbx", (fbx) => {
-//   fbx.scale.set(0.17, 0.17, 0.17);
-//   console.log(fbx);
-//   scene.add(fbx);
-// });
+fbxLoader.load("models/Static_All.fbx", (fbx) => {
+  fbx.scale.set(0.17, 0.17, 0.17);
+  console.log(fbx);
+  scene.add(fbx);
+});
 
 fbxLoader.load("Floor.fbx", (fbx) => {
   fbx.scale.set(0.17, 0.17, 0.17);
