@@ -32,12 +32,12 @@ body {
   padding-bottom: 30px;
 }
 
-.textbox-text > h2 {
+h2 {
   font-size: 2rem;
   margin-bottom: 1.3rem;
 }
 
-.textbox-text > p > a {
+p > a {
   color: #ffffff;
   text-decoration: none;
   border-bottom: 1px solid #ffffff;
@@ -48,14 +48,14 @@ body {
   width: 100%;
 }
 
-.textbox-text > h3 {
+h3 {
   font-size: 1.8rem;
   margin-bottom: 1.3rem;
 }
 
 
 
-.textbox-text > p {
+p {
   margin-bottom: 2rem;
 }
 
@@ -91,7 +91,7 @@ body {
 
 .content-container {
   padding: 40px;
-  background: #223262;
+  background: #222222;
   color: #ffffff;
   display: flex;
   border-radius: 5px;
@@ -103,7 +103,7 @@ body {
   font-size: 1.6rem;
   color: #ffffff;
   font-weight: 700;
-  background: #223262;
+  background: #222222;
     padding: 10px;
 }
 
@@ -118,8 +118,8 @@ body {
 }
 
 .btn {
-  background-color: #FF6900;
-  border: 1px solid #ff5e00;
+  background-color: #753bbd;
+  border: 1px solid #753bbd;
   border-radius: 5px;
   padding: 11px 27px;
   font-size: 1.3rem;
@@ -148,11 +148,77 @@ body {
 }
 .student-wrapper {
   padding: 40px;
-  background: #223262;
+  background: #222222;
   color: #ffffff;
   display: flex;
   border-radius: 5px;
+  position: relative;
   flex-direction: column;
+  min-height: calc(100vh - 20vh);
+}
+.wrap {
+  max-width: 900px;
+  margin: 0 auto;
+}
+.glide__slide {
+  border: 1px solid black;
+  line-height: 100px;
+  margin: 0;
+  text-align: center;
+}
+
+.glide__slides {
+  background-color: #ffffff;
+}
+
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  padding: 0 4px;
+  justify-content: center;
+}
+
+/* Create four equal columns that sits next to each other */
+.column {
+  flex: 25%;
+  max-width: 25%;
+  padding: 0 8px;
+}
+
+.column img {
+  margin-top: 16px;
+  vertical-align: middle;
+  width: 100%;
+}
+
+/* Responsive layout - makes a two column-layout instead of four columns */
+@media screen and (max-width: 800px) {
+  .column {
+    flex: 50%;
+    max-width: 50%;
+  }
+}
+
+/* Responsive layout - makes the two columns stack on top of each other instead of next to each other */
+@media screen and (max-width: 600px) {
+  .column {
+    flex: 100%;
+    max-width: 100%;
+  }
+}
+
+.student-ctas {
+  display: flex;
+  gap: 10px;
+  margin-top: 3rem;
+}
+
+.student-cta {
+  text-decoration: none;
+}
+
+.audio-player {
+  padding-top: 20px;
 }
 
 /* Utility Classe */

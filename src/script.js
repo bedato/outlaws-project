@@ -10,8 +10,18 @@ import { textBoxContent, textBoxContent2 } from "./data";
 const imgPath = "https://via.placeholder.com/250x300";
 const personName1 = "Sam";
 const personName2 = "Thomas";
+const project1 = document.querySelector(".project-1");
+const project2 = document.querySelector(".project-2");
+const projectAudio1 = document.querySelector(".audio-project-1");
+const projectAudio2 = document.querySelector(".audio-project-2");
+const studentProjects = document.querySelectorAll(".student-container")
 const textBoxElement = document.getElementById("text-element");
-initText(textBoxContent, imgPath, personName1);
+
+new GreenAudioPlayer(".song-1");
+new GreenAudioPlayer(".song-2");
+
+
+
 /**
  * Loaders
  */
@@ -223,14 +233,19 @@ function onClick(event) {
 
     } else if (intersects[0].object.parent.name === "PC_Setup_03") {
       click.play();
+      project1.classList.add("visible")
     } else if (intersects[0].object.parent.name === "PC_Setup_02") {
       click.play();
+      project2.classList.add("visible");
+
     } else if (intersects[0].object.name === "TV") {
       click.play();
       window.open("http://infoscreen.sae.ch/", "_blank").focus();
     } else if (intersects[0].object.name === "Door_02") {
+      projectAudio1.classList.add("visible");
       click.play();
     } else if (intersects[0].object.name === "Door_03") {
+      projectAudio2.classList.add("visible");
       click.play();
     }
   }
@@ -239,18 +254,21 @@ function onClick(event) {
 // Close Elements
 
 function closeTextBoxes() {
-  closeAudio.play();
-  textBoxElement.classList.remove("visible");
-  // studentProject.classList.remove("visible");
-  // studentProjectTitle.innerHTML = "";
-  // studentProjectText.innerHTML = "";
-  // textBoxTitle.innerHTML = "";
-  // textBoxText.innerHTML = "";
+  if (textBoxElement.classList.contains("visible")) {
+    closeAudio.play();
+    textBoxElement.classList.remove("visible")
+  }
+
+  for (let i = 0; i < studentProjects.length; i++) {
+    const element = studentProjects[i];
+    if (element.classList.contains("visible")) {
+      closeAudio.play();
+      element.classList.remove("visible")
+    }
+  }
 }
 canvas.addEventListener('click', function () {
-  if (textBoxElement.classList.contains("visible")) {
     closeTextBoxes();
-  }
 })
 
 
