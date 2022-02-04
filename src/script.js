@@ -3,7 +3,7 @@ import "./style.css";
 import * as THREE from "three";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
 import { FBXLoader } from "three/examples/jsm/loaders/FBXLoader";
-import { gsap, selector } from "gsap";
+import { gsap } from "gsap";
 import { initText } from "./rest";
 import { textBoxContent, textBoxContent2 } from "./data";
 
@@ -59,17 +59,6 @@ const loadingManager = new THREE.LoadingManager(
     loadingBarElement.style.transform = `scaleX(${progressRatio})`;
   }
 );
-const fbxLoader = new FBXLoader(loadingManager);
-const sound = new THREE.PositionalAudio(listener);
-const audioLoader = new THREE.AudioLoader();
-audioLoader.load("masters/loop.ogg", function (buffer) {
-  console.log(buffer);
-  sound.setBuffer(buffer);
-  sound.setLoop(true);
-  sound.setVolume(0.5);
-  sound.setRefDistance(2000);
-  sound.play();
-});
 
 /**
  * Base
@@ -135,54 +124,13 @@ scene.add(directionalLight);
 //   console.log(fbx);
 //   scene.add(fbx);
 // });
+const fbxLoader = new FBXLoader(loadingManager);
+const models = ["Floor.fbx", "models/Dozent_L.fbx", "models/Dozent_R.fbx", "models/Door_L.fbx", "models/Door_R.fbx", "models/Infoscreen.fbx", "models/PC_Setup_02.fbx", "models/PC_Setup_03.fbx"]
 
-fbxLoader.load("Floor.fbx", (fbx) => {
-  fbx.scale.set(0.17, 0.17, 0.17);
-  console.log(fbx);
+models.forEach(element => {
+  fbxLoader.load(element, (fbx) => {
   scene.add(fbx);
 });
-
-fbxLoader.load("models/Dozent_L.fbx", (fbx) => {
-  fbx.scale.set(0.17, 0.17, 0.17);
-  console.log(fbx);
-  scene.add(fbx);
-});
-
-fbxLoader.load("models/Dozent_R.fbx", (fbx) => {
-  fbx.scale.set(0.17, 0.17, 0.17);
-  console.log(fbx);
-  scene.add(fbx);
-});
-
-fbxLoader.load("models/Door_L.fbx", (fbx) => {
-  fbx.scale.set(0.17, 0.17, 0.17);
-  console.log(fbx);
-  scene.add(fbx);
-});
-
-fbxLoader.load("models/Door_R.fbx", (fbx) => {
-  fbx.scale.set(0.17, 0.17, 0.17);
-  console.log(fbx);
-  fbx.add(sound);
-  scene.add(fbx);
-});
-
-fbxLoader.load("models/Infoscreen.fbx", (fbx) => {
-  fbx.scale.set(0.17, 0.17, 0.17);
-  console.log(fbx);
-  scene.add(fbx);
-});
-
-fbxLoader.load("models/PC_Setup_02.fbx", (fbx) => {
-  fbx.scale.set(0.17, 0.17, 0.17);
-  console.log(fbx);
-  scene.add(fbx);
-});
-
-fbxLoader.load("models/PC_Setup_03.fbx", (fbx) => {
-  fbx.scale.set(0.17, 0.17, 0.17);
-  console.log(fbx);
-  scene.add(fbx);
 });
 
 
@@ -299,15 +247,35 @@ window.addEventListener("resize", () => {
  */
 // Base camera
 const camera = new THREE.PerspectiveCamera(
-  45,
+  50,
   sizes.width / sizes.height,
   0.1,
   100
 );
-camera.position.x = 4;
-camera.position.y = 2;
-camera.position.z = 4;
+camera.position.x = -20;
+camera.position.y = 16;
+camera.position.z = 30;
 scene.add(camera);
+
+
+ /**
+  * Audio Handling
+  */
+camera.add(listener);
+const audioLoader = new THREE.AudioLoader();
+
+const positionalAudio = new THREE.PositionalAudio(listener);
+audioLoader.load("masters/audio.ogg", function (buffer) {
+  positionalAudio.setBuffer(buffer);
+  positionalAudio.setRefDistance(20);
+  positionalAudio.setVolume(0.2);
+  positionalAudio.loop = true;
+  positionalAudio.play();
+  positionalAudio.setDirectionalCone(180, 230, 0.1);
+  positionalAudio.position.y = 1;
+  positionalAudio.position.z = 10;
+});
+
 
 // Controls
 const controls = new OrbitControls(camera, canvas);
