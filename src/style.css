@@ -6,6 +6,7 @@
 html,
 body {
   overflow: hidden;
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
 }
 
 .webgl {
@@ -26,187 +27,135 @@ body {
   transition: transform 0.5s;
 }
 
+.textbox-text {
+  margin-bottom: auto;
+  padding-bottom: 30px;
+}
+
+.textbox-text > h2 {
+  font-size: 2rem;
+  margin-bottom: 1.3rem;
+}
+
+.textbox-text > p > a {
+  color: #ffffff;
+  text-decoration: none;
+  border-bottom: 1px solid #ffffff;
+}
+
+
+.content-image {
+  width: 100%;
+}
+
+.textbox-text > h3 {
+  font-size: 1.8rem;
+  margin-bottom: 1.3rem;
+}
+
+
+
+.textbox-text > p {
+  margin-bottom: 2rem;
+}
+
 .loading-bar.ended {
   transform: scaleX(0);
   transform-origin: 100% 0;
   transition: transform 1.5s ease-in-out;
 }
 
-.point {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  /* pointer-events: none; */
-}
-
-.text-box {
+.text-container {
   position: absolute;
   display: none;
-  color: #fff;
-  bottom: 110px;
-  max-width: 1100px;
-  background: #223262;
-  z-index: 999;
+  bottom: 50px;
   left: 0;
-  border: 4px solid #afaeae;
-  padding: 30px 60px;
-  border-radius: 20px;
-  margin: 0 auto;
-  font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
   right: 0;
-  font-size: 2rem;
+  margin: auto;
+  max-width: 1080px;
+  border-radius: 5px;
+  z-index: 9999;
 }
 
-.text-box-wrapper {
+.content-wrapper {
   display: flex;
-  justify-content: space-between;
+  gap: 10px;
 }
 
-.text-box-answers-wrapper {
-  display: none;
-  margin-top: auto;
-  text-align: center;
+.content-image-container {
+  width: 300px;
+  align-self: end;
+  border-radius: 5px;
+
 }
 
-.text-box-content {
+.content-container {
+  padding: 40px;
+  background: #223262;
+  color: #ffffff;
   display: flex;
+  border-radius: 5px;
+
   flex-direction: column;
 }
 
-h1 {
-  font-size: 1em;
-  line-height: 1;
-}
-
-p {
-  font-size: 1.8rem;
-}
-
-.text-box-answers {
-  display: grid;
-  grid-template-columns: 220px 220px;
-  grid-gap: 12px;
-}
-
-.text-box-answer {
-  color: white;
-  text-decoration: none;
-  background-color: grey;
-  padding: 13px 24px;
-  transition: 0.2s;
-  box-sizing: border-box;
-  font-size: 1.3rem;
-}
-
-.text-box-answer:hover {
-  outline: 7px inset black;
-}
-
-.student-project-title {
-  margin-bottom: 1.2rem;
-}
-
-.lead {
-
-}
-
-.text-box-text {
-  max-width: 760px;
-}
-
-.student-project {
-  position: absolute;
-  color: #fff;
+.name {
+  font-size: 1.6rem;
+  color: #ffffff;
+  font-weight: 700;
   background: #223262;
-  z-index: 999;
-  left: 0;
-  top: 50%;
-  transform: translate(0, -50%);
-  right: 0;
-  border: 7px solid #afaeae;
-  padding: 30px 60px;
-  border-radius: 7px;
-  margin: 13px 50px;
-  font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
-  font-size: 2rem;
-  display: none;
+    padding: 10px;
 }
 
-.student-project--wrapper {
-  display: flex;
-}
-
-.student-project-text {
-  font-size: 1.2rem;
-  max-width: 70%;
-}
-
-.student-project-text > p {
+.content-container {
   font-size: 1.4rem;
 }
-.student-project-cta {
-  color: white;
-  text-decoration: none;
-  background-color: grey;
-  padding: 13px 24px;
-  transition: 0.2s;
-  box-sizing: border-box;
+
+.btn-grid {
+  display: grid;
+  grid-template-columns: repeat(2, auto);
+  gap: 15px;
+}
+
+.btn {
+  background-color: #FF6900;
+  border: 1px solid #ff5e00;
+  border-radius: 5px;
+  padding: 11px 27px;
   font-size: 1.3rem;
+  color: white;
+  outline: none;
 }
 
-.text-box-answer:hover {
-  outline: 7px inset black;
+.btn:hover {
+  border-color: black;
+  cursor: pointer;
 }
 
-.sub-title {
-  margin: 0.8em 0 0.7em 0;
-}
 
-.student-project-cta:hover {
-  outline: 7px inset black;
+/* Student Project */
+.student-container {
+  position: absolute;
+  display: none;
+  bottom: 50px;
+  top: 50px;
+  left: 0;
+  right: 0;
+  margin: auto;
+  max-width: 1080px;
+  border-radius: 5px;
+  z-index: 9999;
 }
-
-.student-project-cta:nth-child(2) {
-  background-color: #ffb500;
-}
-
-.student-project-cta:nth-child(1) {
-  margin-right: 20px;
-}
-
-.student-project-img {
-  width: 500px;
-  padding: 0 0 20px 0;
-}
-
-.student-project-cta--wrapper {
+.student-wrapper {
+  padding: 40px;
+  background: #223262;
+  color: #ffffff;
   display: flex;
-}
-
-.student-project-more {
-  display: flex;
+  border-radius: 5px;
   flex-direction: column;
-  justify-content: center;
-  flex: 0 0 40%;
 }
 
-
-.audio {
-  background: #307fe2;
-}
-
-.game {
-  background: #ee2737;
-}
-
-.film {
-  background: #ffb500;
-}
-
-.web {
-  background-color: #753bbd;
-}
-
+/* Utility Classe */
 .visible {
-  display: block;
+  display: block ;
 }

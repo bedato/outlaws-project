@@ -2,25 +2,16 @@ import "./style.css";
 // import * as dat from "lil-gui";
 import * as THREE from "three";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
-// import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader.js";
 import { FBXLoader } from "three/examples/jsm/loaders/FBXLoader";
-// import { DRACOLoader } from "three/examples/jsm/loaders/DRACOLoader.js";
-import { gsap } from "gsap";
-import { object } from "./rest";
-// import { getJson } from "./utils";
-const textBoxObject = object();
-const textBoxElement = document.querySelector(".text-box");
-const textBoxTitle = document.querySelector(".text-box-title");
-const textBoxText = document.querySelector(".text-box-text");
-const questionList = document.querySelector(".text-box-answers");
-const questionListElement = document.querySelector(".text-box-answers-wrapper");
-const answer1 = document.querySelector(".audio");
-const answer2 = document.querySelector(".game");
-const answer3 = document.querySelector(".film");
-const answer4 = document.querySelector(".web");
-const studentProject = document.querySelector(".student-project");
-const studentProjectTitle = document.querySelector(".student-project-title");
-const studentProjectText = document.querySelector(".student-project-text");
+import { gsap, selector } from "gsap";
+import { initText } from "./rest";
+import { textBoxContent, textBoxContent2 } from "./data";
+
+const imgPath = "https://via.placeholder.com/250x300";
+const personName1 = "Sam";
+const personName2 = "Thomas";
+const textBoxElement = document.getElementById("text-element");
+initText(textBoxContent, imgPath, personName1);
 /**
  * Loaders
  */
@@ -64,12 +55,11 @@ const audioLoader = new THREE.AudioLoader();
 audioLoader.load("masters/loop.ogg", function (buffer) {
   console.log(buffer);
   sound.setBuffer(buffer);
-  sound.setLoop( true );
-	sound.setVolume( 0.5 );
+  sound.setLoop(true);
+  sound.setVolume(0.5);
   sound.setRefDistance(2000);
   sound.play();
 });
-
 
 /**
  * Base
@@ -130,11 +120,11 @@ scene.add(directionalLight);
  * Model
  */
 
-fbxLoader.load("models/Static_All.fbx", (fbx) => {
-  fbx.scale.set(0.17, 0.17, 0.17);
-  console.log(fbx);
-  scene.add(fbx);
-});
+// fbxLoader.load("models/Static_All.fbx", (fbx) => {
+//   fbx.scale.set(0.17, 0.17, 0.17);
+//   console.log(fbx);
+//   scene.add(fbx);
+// });
 
 fbxLoader.load("Floor.fbx", (fbx) => {
   fbx.scale.set(0.17, 0.17, 0.17);
@@ -185,7 +175,6 @@ fbxLoader.load("models/PC_Setup_03.fbx", (fbx) => {
   scene.add(fbx);
 });
 
-let questionId;
 
 function onDocumentMouseMove(event) {
   var mouse = new THREE.Vector2();
@@ -205,8 +194,8 @@ function onDocumentMouseMove(event) {
     document.body.style.cursor = "default";
   }
 }
-    const click = new Audio("masters/click.ogg");
-    const closeAudio = new Audio("masters/close.ogg");
+const click = new Audio("masters/click.ogg");
+const closeAudio = new Audio("masters/close.ogg");
 
 function onClick(event) {
   event.preventDefault();
@@ -226,110 +215,44 @@ function onClick(event) {
     console.log(intersects[0].object);
     if (intersects[0].object.name === "Human_R") {
       click.play();
-      textBoxElement.classList.add("visible");
-      questionListElement.classList.add("visible");
-      textBoxTitle.innerHTML = textBoxObject.infoPerson1.name;
-      textBoxText.innerHTML = textBoxObject.infoPerson1.initialText;
-      answer1.innerHTML = textBoxObject.infoPerson1.answers[0].label;
-      answer1.setAttribute("data-index", "0");
-      answer2.innerHTML = textBoxObject.infoPerson1.answers[1].label;
-      answer2.setAttribute("data-index", "1");
-      answer3.innerHTML = textBoxObject.infoPerson1.answers[2].label;
-      answer3.setAttribute("data-index", "2");
-      answer4.innerHTML = textBoxObject.infoPerson1.answers[3].label;
-      answer4.setAttribute("data-index", "3");
+      initText(textBoxContent2, imgPath, personName2);
 
-      questionList.addEventListener("click", function (e, target) {
-        questionId = e.target.dataset.index;
-        questionId = parseInt(questionId);
-        questionListElement.classList.remove("visible");
-
-        textBoxText.innerHTML =
-          textBoxObject.infoPerson1.answers[questionId].answer;
-      });
     } else if (intersects[0].object.name === "Human_L") {
       click.play();
-      textBoxElement.classList.add("visible");
-      questionListElement.classList.add("visible");
-      textBoxTitle.innerHTML = textBoxObject.infoPerson2.name;
-      textBoxText.innerHTML = textBoxObject.infoPerson2.initialText;
-      answer1.innerHTML = textBoxObject.infoPerson2.answers[0].label;
-      answer1.setAttribute("data-index", "0");
-      answer2.innerHTML = textBoxObject.infoPerson2.answers[1].label;
-      answer2.setAttribute("data-index", "1");
-      answer3.innerHTML = textBoxObject.infoPerson2.answers[2].label;
-      answer3.setAttribute("data-index", "2");
-      answer4.innerHTML = textBoxObject.infoPerson2.answers[3].label;
-      answer4.setAttribute("data-index", "3");
+      initText(textBoxContent, imgPath, personName1);
 
-      questionList.addEventListener("click", function (e, target) {
-        questionId = e.target.dataset.index;
-        click.play();
-        questionId = parseInt(questionId);
-        questionListElement.classList.remove("visible");
-
-        textBoxText.innerHTML =
-          textBoxObject.infoPerson2.answers[questionId].answer;
-      });
     } else if (intersects[0].object.parent.name === "PC_Setup_03") {
       click.play();
-      studentProject.classList.add("visible");
-      studentProjectTitle.innerHTML = textBoxObject.studentProject1.name;
-      studentProjectText.innerHTML =
-        textBoxObject.studentProject1.projectDescription;
     } else if (intersects[0].object.parent.name === "PC_Setup_02") {
       click.play();
-      studentProject.classList.add("visible");
-      studentProjectTitle.innerHTML = textBoxObject.studentProject2.name;
-      studentProjectText.innerHTML =
-        textBoxObject.studentProject2.projectDescription;
     } else if (intersects[0].object.name === "TV") {
       click.play();
       window.open("http://infoscreen.sae.ch/", "_blank").focus();
     } else if (intersects[0].object.name === "Door_02") {
       click.play();
-      studentProject.classList.add("visible");
-      studentProjectTitle.innerHTML = textBoxObject.studentProjectAudio1.name;
-      studentProjectText.innerHTML =
-        textBoxObject.studentProjectAudio1.projectDescription;
     } else if (intersects[0].object.name === "Door_03") {
       click.play();
-      studentProject.classList.add("visible");
-      studentProjectTitle.innerHTML = textBoxObject.studentProjectAudio2.name;
-      studentProjectText.innerHTML =
-        textBoxObject.studentProjectAudio2.projectDescription;
     }
-    // else {
-    //   closeAudio.play();
-    //   textBoxElement.classList.remove("visible");
-    //   studentProject.classList.remove("visible");
-    //   studentProjectTitle.innerHTML = "";
-    //   studentProjectText.innerHTML = "";
-    //   textBoxTitle.innerHTML = "";
-    //   textBoxText.innerHTML = "";
-    // }
   }
 }
-
-
 
 // Close Elements
 
 function closeTextBoxes() {
-        closeAudio.play();
-        textBoxElement.classList.remove("visible");
-        studentProject.classList.remove("visible");
-        studentProjectTitle.innerHTML = "";
-        studentProjectText.innerHTML = "";
-        textBoxTitle.innerHTML = "";
-        textBoxText.innerHTML = "";
+  closeAudio.play();
+  textBoxElement.classList.remove("visible");
+  // studentProject.classList.remove("visible");
+  // studentProjectTitle.innerHTML = "";
+  // studentProjectText.innerHTML = "";
+  // textBoxTitle.innerHTML = "";
+  // textBoxText.innerHTML = "";
 }
 canvas.addEventListener('click', function () {
-  if (textBoxElement.classList.contains("visible") || studentProject.classList.contains("visible")) {
+  if (textBoxElement.classList.contains("visible")) {
     closeTextBoxes();
   }
 })
-// }
+
 
 /**
  * Sizes

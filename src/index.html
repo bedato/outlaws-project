@@ -8,52 +8,63 @@
   <body>
     <div class="loading-bar"></div>
 
-    <div class="text-box">
-      <div class="text-box-wrapper">
-        <div class="text-box-content">
-          <p class="text-box-text"></p>
-          <div class="text-box-answers-wrapper">
-            <div class="text-box-answers">
-              <a href="#" class="text-box-answer audio">Audio</a>
-              <a href="#" class="text-box-answer game">Game</a>
-              <a href="#" class="text-box-answer film">Film</a>
-              <a href="#" class="text-box-answer web">Web</a>
-            </div>
-          </div>
+    <div class="text-container" id="text-element">
+      <div class="content-wrapper">
+        <div class="content-container">
+          <div id="text" class="textbox-text">Text</div>
+          <div id="option-buttons" class="btn-grid"></div>
         </div>
-        <div class="text-box-image">
-          <img src="https://via.placeholder.com/180x230" alt="" />
-          <h1 class="text-box-title"></h1>
+        <div class="content-image-container">
+          <img
+            id="content-image"
+            src="https://via.placeholder.com/150"
+            alt=""
+          />
+          <div class="name">Sam</div>
         </div>
       </div>
     </div>
 
-    <div class="student-project">
-      <div class="student-project--wrapper">
-        <div class="student-project-content">
-          <h1 class="student-project-title">This is a great student Project</h1>
-          <div class="student-project-text">
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ullam
-            eaque distinctio, doloribus suscipit voluptate, expedita nesciunt.</p>
-            <br>
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Totam ipsum, voluptate quas quae doloremque sequi, minus sit temporibus esse necessitatibus omnis libero autem rerum.</p>
-            <h3 class="sub-title">Ein Sub Titel</h3>
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Totam ipsum, voluptate quas quae doloremque sequi, minus sit temporibus esse necessitatibus omnis libero autem rerum.</p>
-            <br>
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Totam ipsum, voluptate quas quae doloremque sequi, minus sit temporibus esse necessitatibus omnis libero autem rerum.</p>
+    <!-- student project  -->
+    <div class="student-container visible">
+      <div class="student-wrapper">
+        <div class="container">
+          <div class="student-info">
+            <h2>Student Game</h2>
+            <p class="lead">
+              Lorem ipsum dolor sit amet consectetur adipisicing elit. Illo
+              eligendi autem enim, possimus porro esse necessitatibus eaque
+              minima aperiam labore nesciunt?
+            </p>
+            <p>
+              Lorem ipsum dolor sit amet consectetur adipisicing elit. Culpa,
+              porro labore commodi deserunt, tempora ipsam nihil nemo cum odit
+              magni cumque earum voluptatem debitis. Vero doloribus dolore
+              asperiores dolorem quae quibusdam accusantium.
+            </p>
+            <p>
+              Lorem ipsum dolor sit amet consectetur adipisicing elit. Culpa,
+              porro labore commodi deserunt, tempora ipsam nihil nemo cum odit
+              magni cumque earum voluptatem debitis. Vero doloribus dolore
+              asperiores dolorem quae quibusdam accusantium.
+            </p>
+            <p>
+              Lorem ipsum dolor sit amet consectetur adipisicing elit. Culpa,
+              porro labore commodi deserunt, tempora ipsam nihil nemo cum odit
+              magni cumque earum voluptatem debitis. Vero doloribus dolore
+              asperiores dolorem quae quibusdam accusantium.
+            </p>
           </div>
-        </div>
-        <div class="student-project-more">
-          <div class="student-project-img-wrapper">
-            <img
-              class="student-project-img"
-              src="https://via.placeholder.com/1080x600"
-              alt=""
-            />
-          </div>
-          <div class="student-project-cta--wrapper">
-            <a class="student-project-cta web" href="#">Student</a>
-            <a class="student-project-cta" href="#">Project</a>
+          <div class="student-media">
+            <div class="glide">
+              <div class="glide__track" data-glide-el="track">...</div>
+
+              <div class="glide__bullets" data-glide-el="controls[nav]">
+                <button class="glide__bullet" data-glide-dir="=0"></button>
+                <button class="glide__bullet" data-glide-dir="=1"></button>
+                <button class="glide__bullet" data-glide-dir="=2"></button>
+              </div>
+            </div>
           </div>
         </div>
       </div>
