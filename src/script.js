@@ -14,13 +14,20 @@ const project1 = document.querySelector(".project-1");
 const project2 = document.querySelector(".project-2");
 const projectAudio1 = document.querySelector(".audio-project-1");
 const projectAudio2 = document.querySelector(".audio-project-2");
-const studentProjects = document.querySelectorAll(".student-container")
+const studentProjects = document.querySelectorAll(".student-container");
 const textBoxElement = document.getElementById("text-element");
+const ovrly = document.querySelector(".overlay");
+const ovrlyBtn = document.getElementById("overlay-btn");
 
-new GreenAudioPlayer(".song-1");
-new GreenAudioPlayer(".song-2");
+GreenAudioPlayer.init({
+  selector: ".song-1",
+  stopOthersOnPlay: true,
+});
 
-
+GreenAudioPlayer.init({
+  selector: ".song-2",
+  stopOthersOnPlay: true,
+});
 
 /**
  * Loaders
@@ -30,6 +37,7 @@ const loadingBarElement = document.querySelector(".loading-bar");
 const raycaster = new THREE.Raycaster();
 const mouse = new THREE.Vector2();
 let sceneReady = false;
+let loadSong = true;
 const loadingManager = new THREE.LoadingManager(
   // Loaded
   () => {
@@ -50,13 +58,6 @@ const loadingManager = new THREE.LoadingManager(
     window.setTimeout(() => {
       sceneReady = true;
     }, 2000);
-  },
-
-  // Progress
-  (itemUrl, itemsLoaded, itemsTotal) => {
-    // Calculate the progress and update the loadingBarElement
-    const progressRatio = itemsLoaded / itemsTotal;
-    loadingBarElement.style.transform = `scaleX(${progressRatio})`;
   }
 );
 
@@ -125,14 +126,22 @@ scene.add(directionalLight);
 //   scene.add(fbx);
 // });
 const fbxLoader = new FBXLoader(loadingManager);
-const models = ["Floor.fbx", "models/Dozent_L.fbx", "models/Dozent_R.fbx", "models/Door_L.fbx", "models/Door_R.fbx", "models/Infoscreen.fbx", "models/PC_Setup_02.fbx", "models/PC_Setup_03.fbx"]
+const models = [
+  "models/Floor.fbx",
+  "models/Dozent_L.fbx",
+  "models/Dozent_R.fbx",
+  "models/Door_L.fbx",
+  "models/Door_R.fbx",
+  "models/Infoscreen.fbx",
+  "models/PC_Setup_02.fbx",
+  "models/PC_Setup_03.fbx",
+];
 
-models.forEach(element => {
+models.forEach((element) => {
   fbxLoader.load(element, (fbx) => {
-  scene.add(fbx);
+    scene.add(fbx);
+  });
 });
-});
-
 
 function onDocumentMouseMove(event) {
   var mouse = new THREE.Vector2();
@@ -174,18 +183,15 @@ function onClick(event) {
     if (intersects[0].object.name === "Human_R") {
       click.play();
       initText(textBoxContent2, imgPath, personName2);
-
     } else if (intersects[0].object.name === "Human_L") {
       click.play();
       initText(textBoxContent, imgPath, personName1);
-
     } else if (intersects[0].object.parent.name === "PC_Setup_03") {
       click.play();
-      project1.classList.add("visible")
+      project1.classList.add("visible");
     } else if (intersects[0].object.parent.name === "PC_Setup_02") {
       click.play();
       project2.classList.add("visible");
-
     } else if (intersects[0].object.name === "TV") {
       click.play();
       window.open("http://infoscreen.sae.ch/", "_blank").focus();
@@ -204,21 +210,26 @@ function onClick(event) {
 function closeTextBoxes() {
   if (textBoxElement.classList.contains("visible")) {
     closeAudio.play();
-    textBoxElement.classList.remove("visible")
+    textBoxElement.classList.remove("visible");
   }
 
   for (let i = 0; i < studentProjects.length; i++) {
     const element = studentProjects[i];
     if (element.classList.contains("visible")) {
       closeAudio.play();
-      element.classList.remove("visible")
+      element.classList.remove("visible");
     }
   }
 }
-canvas.addEventListener('click', function () {
-    closeTextBoxes();
-})
+canvas.addEventListener("click", function () {
+  closeTextBoxes();
+  var sounds = document.getElementsByTagName("audio");
+  for (let i = 0; i < sounds.length; i++) sounds[i].pause();
 
+  if (!loadSong) {
+    playSong();
+  }
+});
 
 /**
  * Sizes
@@ -257,25 +268,41 @@ camera.position.y = 16;
 camera.position.z = 30;
 scene.add(camera);
 
-
- /**
-  * Audio Handling
-  */
+/**
+ * Audio Handling
+ */
 camera.add(listener);
 const audioLoader = new THREE.AudioLoader();
-
 const positionalAudio = new THREE.PositionalAudio(listener);
-audioLoader.load("masters/audio.ogg", function (buffer) {
-  positionalAudio.setBuffer(buffer);
-  positionalAudio.setRefDistance(20);
-  positionalAudio.setVolume(0.2);
-  positionalAudio.loop = true;
-  positionalAudio.play();
-  positionalAudio.setDirectionalCone(180, 230, 0.1);
-  positionalAudio.position.y = 1;
-  positionalAudio.position.z = 10;
+
+function playSong() {
+  audioLoader.load("students/mic-check.ogg", function (buffer) {
+    positionalAudio.setBuffer(buffer);
+    positionalAudio.setRefDistance(20);
+    positionalAudio.setVolume(0.05);
+    positionalAudio.loop = true;
+    positionalAudio.muted = true;
+    positionalAudio.play();
+    positionalAudio.setDirectionalCone(180, 230, 0.1);
+    positionalAudio.position.y = 1;
+    positionalAudio.position.z = 10;
+  });
+}
+
+
+
+ovrlyBtn.addEventListener("click", function () {
+  ovrly.classList.add("open");
+    playSong();
 });
 
+const playbtn = document.querySelectorAll(".holder");
+playbtn.forEach((element) => {
+  element.addEventListener("click", function () {
+    loadSong = false;
+    positionalAudio.stop();
+  });
+});
 
 // Controls
 const controls = new OrbitControls(camera, canvas);

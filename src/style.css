@@ -6,7 +6,7 @@
 html,
 body {
   overflow: hidden;
-  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+  font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
 }
 
 .webgl {
@@ -14,6 +14,45 @@ body {
   top: 0;
   left: 0;
   outline: none;
+}
+
+.overlay {
+  height: calc(var(--vh, 1vh) * 100);
+  height: 100vh;
+  background-color: #000;
+  position: relative;
+  transition: 0.8s;
+  z-index: 999;
+}
+
+.open {
+  transform: translateY(-100%);
+}
+
+.overlay-container > button {
+  padding: 16px 32px;
+  font-size: 32px;
+  border-radius: 35px;
+  color: #fff;
+  border: #fff 1px solid;
+  background: none;
+  cursor: pointer;
+  transition: transform 0.5s;
+}
+
+.overlay-container > button:hover {
+  border: 3px solid #fff;
+}
+
+.overlay-container > button:active {
+  border: 3px solid #3ab54a;
+}
+
+.overlay-container {
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .loading-bar {
@@ -43,7 +82,6 @@ p > a {
   border-bottom: 1px solid #ffffff;
 }
 
-
 .content-image {
   width: 100%;
 }
@@ -52,8 +90,6 @@ h3 {
   font-size: 1.8rem;
   margin-bottom: 1.3rem;
 }
-
-
 
 p {
   margin-bottom: 2rem;
@@ -86,7 +122,6 @@ p {
   width: 300px;
   align-self: end;
   border-radius: 5px;
-
 }
 
 .content-container {
@@ -104,7 +139,7 @@ p {
   color: #ffffff;
   font-weight: 700;
   background: #222222;
-    padding: 10px;
+  padding: 10px;
 }
 
 .content-container {
@@ -132,7 +167,6 @@ p {
   cursor: pointer;
 }
 
-
 /* Student Project */
 .student-container {
   position: absolute;
@@ -156,19 +190,9 @@ p {
   flex-direction: column;
   min-height: calc(100vh - 20vh);
 }
-.wrap {
-  max-width: 900px;
-  margin: 0 auto;
-}
-.glide__slide {
-  border: 1px solid black;
-  line-height: 100px;
-  margin: 0;
-  text-align: center;
-}
 
-.glide__slides {
-  background-color: #ffffff;
+.student-video {
+  padding-top: 16px;
 }
 
 .row {
@@ -223,5 +247,5 @@ p {
 
 /* Utility Classe */
 .visible {
-  display: block ;
+  display: block;
 }
