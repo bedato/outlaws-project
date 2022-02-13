@@ -82,8 +82,8 @@ p > a {
   border-bottom: 1px solid #ffffff;
 }
 
-.content-image {
-  width: 100%;
+#content-image {
+  width: 300px;
 }
 
 h3 {

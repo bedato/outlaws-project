@@ -1,13 +1,13 @@
-import "./style.css";
+import "../styles/style.css";
 // import * as dat from "lil-gui";
 import * as THREE from "three";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
 import { FBXLoader } from "three/examples/jsm/loaders/FBXLoader";
 import { gsap } from "gsap";
-import { initText } from "./rest";
-import { textBoxContent, textBoxContent2 } from "./data";
+import { initText } from "./utils/rest";
+import { textBoxContent, textBoxContent2 } from "./utils/data";
 
-const imgPath = "https://via.placeholder.com/250x300";
+const imgPath = ["img/sammy.jpg", "img/Tommy.png"];
 const personName1 = "Sam";
 const personName2 = "Thomas";
 const project1 = document.querySelector(".project-1");
@@ -36,7 +36,6 @@ const listener = new THREE.AudioListener();
 const loadingBarElement = document.querySelector(".loading-bar");
 const raycaster = new THREE.Raycaster();
 const mouse = new THREE.Vector2();
-let sceneReady = false;
 let loadSong = true;
 const loadingManager = new THREE.LoadingManager(
   // Loaded
@@ -109,22 +108,17 @@ const directionalLight = new THREE.DirectionalLight(0xffffff, 0.9);
 directionalLight.castShadow = true;
 directionalLight.shadow.mapSize.set(1024, 1024);
 directionalLight.shadow.camera.far = 15;
-directionalLight.shadow.camera.left = -10;
-directionalLight.shadow.camera.top = 10;
-directionalLight.shadow.camera.right = 10;
+directionalLight.shadow.camera.left = -80;
+directionalLight.shadow.camera.top = 50;
+directionalLight.shadow.camera.right = 70;
 directionalLight.shadow.camera.bottom = -10;
 directionalLight.position.set(10, 10, 10);
 scene.add(directionalLight);
 
 /**
- * Model
+ * Models
  */
 
-// fbxLoader.load("models/Static_All.fbx", (fbx) => {
-//   fbx.scale.set(0.17, 0.17, 0.17);
-//   console.log(fbx);
-//   scene.add(fbx);
-// });
 const fbxLoader = new FBXLoader(loadingManager);
 const models = [
   "models/Floor.fbx",
@@ -135,6 +129,7 @@ const models = [
   "models/Infoscreen.fbx",
   "models/PC_Setup_02.fbx",
   "models/PC_Setup_03.fbx",
+  "models/reception.fbx"
 ];
 
 models.forEach((element) => {
@@ -182,10 +177,10 @@ function onClick(event) {
     console.log(intersects[0].object);
     if (intersects[0].object.name === "Human_R") {
       click.play();
-      initText(textBoxContent2, imgPath, personName2);
+      initText(textBoxContent2, imgPath[1], personName2);
     } else if (intersects[0].object.name === "Human_L") {
       click.play();
-      initText(textBoxContent, imgPath, personName1);
+      initText(textBoxContent, imgPath[0], personName1);
     } else if (intersects[0].object.parent.name === "PC_Setup_03") {
       click.play();
       project1.classList.add("visible");
@@ -206,7 +201,6 @@ function onClick(event) {
 }
 
 // Close Elements
-
 function closeTextBoxes() {
   if (textBoxElement.classList.contains("visible")) {
     closeAudio.play();
